@@ -11,7 +11,7 @@ class Student(models.Model):
 
     name = models.CharField(max_length=255)
     birth_date = models.DateField()
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     phone = models.CharField(max_length=20)
     genre = models.CharField(max_length=7, choices=GENRE_CHOICE)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICE)
