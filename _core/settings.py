@@ -60,7 +60,11 @@ THIRD_PARTY_APPS = [
 ]
 
 
-LOCAL_APPS = ["users.apps.UsersConfig", "students.apps.StudentsConfig"]
+LOCAL_APPS = [
+    "users.apps.UsersConfig",
+    "students.apps.StudentsConfig",
+    "payments.apps.PaymentsConfig",
+]
 
 INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + LOCAL_APPS
 
