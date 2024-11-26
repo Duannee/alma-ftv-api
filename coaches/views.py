@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from rest_framework.generics import CreateAPIView
+from .models import Coach
+from .serializers import CoachSerializer
 
-# Create your views here.
+
+class CreateCoachView(CreateAPIView):
+    queryset = Coach.objects.all()
+    serializer_class = CoachSerializer
