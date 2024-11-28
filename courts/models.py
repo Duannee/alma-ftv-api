@@ -1,3 +1,6 @@
 from django.db import models
 
-# Create your models here.
+
+class Court(models.Model):
+    number = models.IntegerField()
+    status = models.CharField(max_length=30)
