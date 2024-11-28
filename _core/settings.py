@@ -64,8 +64,6 @@ LOCAL_APPS = [
     "users.apps.UsersConfig",
     "students.apps.StudentsConfig",
     "payments.apps.PaymentsConfig",
-    "coaches.apps.CoachesConfig",
-    "profiles.apps.ProfilesConfig",
     "logins.apps.LoginsConfig",
 ]
 
