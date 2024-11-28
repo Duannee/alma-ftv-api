@@ -65,6 +65,7 @@ LOCAL_APPS = [
     "students.apps.StudentsConfig",
     "payments.apps.PaymentsConfig",
     "logins.apps.LoginsConfig",
+    "courts.apps.CourtsConfig",
 ]
 
 INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + LOCAL_APPS
