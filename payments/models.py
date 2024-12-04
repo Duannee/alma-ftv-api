@@ -8,7 +8,9 @@ class Payment(models.Model):
         ("PENDING", "PENDING"),
         ("LATE", "LATE"),
     ]
-    student = models.OneToOneField(Student, on_delete=models.CASCADE)
+    student = models.ForeignKey(
+        Student, on_delete=models.CASCADE, related_name="payments"
+    )
     pay_day = models.DateField()
     value = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(
