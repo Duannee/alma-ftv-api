@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Student(models.Model):
@@ -9,6 +10,7 @@ class Student(models.Model):
     ]
     GENRE_CHOICE = [("FEMALE", "FEMALE"), ("MALE", "MALE"), ("OTHERS", "OTHERS")]
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="students")
     name = models.CharField(max_length=255)
     birth_date = models.DateField()
     email = models.EmailField(unique=True)
