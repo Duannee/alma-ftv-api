@@ -18,6 +18,8 @@ class Student(models.Model):
     genre = models.CharField(max_length=7, choices=GENRE_CHOICE)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICE)
     profile_img = models.TextField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
         return self.name
