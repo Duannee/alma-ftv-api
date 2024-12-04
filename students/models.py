@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.timezone import now
 
 
 class Student(models.Model):
@@ -10,7 +11,7 @@ class Student(models.Model):
     ]
     GENRE_CHOICE = [("FEMALE", "FEMALE"), ("MALE", "MALE"), ("OTHERS", "OTHERS")]
 
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name="students")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="students")
     name = models.CharField(max_length=255)
     birth_date = models.DateField()
     email = models.EmailField(unique=True)
@@ -18,7 +19,7 @@ class Student(models.Model):
     genre = models.CharField(max_length=7, choices=GENRE_CHOICE)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICE)
     profile_img = models.TextField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
