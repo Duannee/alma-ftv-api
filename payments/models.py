@@ -11,7 +11,7 @@ class Payment(models.Model):
     student = models.ForeignKey(
         Student, on_delete=models.CASCADE, related_name="payments"
     )
-    pay_day = models.DateField()
+    payment_day = models.DateField()
     value = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(
         max_length=20, choices=STATUS_PAYMENT_CHOICES, default="UP_TO_DATE"
