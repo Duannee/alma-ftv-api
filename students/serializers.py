@@ -25,6 +25,7 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = "__all__"
+        read_only_fields = ["created_at", "updated_at"]
 
     def validate(self, data):
         for key in data.keys():
