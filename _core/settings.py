@@ -68,6 +68,9 @@ LOCAL_APPS = [
     "logins.apps.LoginsConfig",
     "courts.apps.CourtsConfig",
     "lists.apps.ListsConfig",
+    "plans.apps.PlansConfig",
+    "list_courts.apps.ListCourtsConfig",
+    "params.apps.ParamsConfig",
 ]
 
 INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + LOCAL_APPS

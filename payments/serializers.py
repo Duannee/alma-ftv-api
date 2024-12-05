@@ -8,7 +8,7 @@ class PaymentSerializer(serializers.ModelSerializer):
         model = Payment
         fields = ["id", "student", "pay_day", "value", "status"]
         depth = 1
-        read_only_fields = ["student"]
+        read_only_fields = ["student", "created_at", "updated_at"]
 
     def validate(self, data):
         for key in data.keys():
