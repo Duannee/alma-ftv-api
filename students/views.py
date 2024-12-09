@@ -8,6 +8,6 @@ class StudentCreateView(ListCreateAPIView):
     serializer_class = StudentSerializer
 
 
-class StudentRetrieveUpdateDestroyView(ListCreateAPIView):
+class StudentRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
