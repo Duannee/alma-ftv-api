@@ -10,6 +10,6 @@ urls_patterns = [
     path(
         "update/list/courts/<int:pk>",
         ListCourtsRetrieveUpdateDestroyView.as_view(),
-        name="retrieve-update-destroy-courts",
+        name="retrieve-update-destroy-list-courts",
     ),
 ]
