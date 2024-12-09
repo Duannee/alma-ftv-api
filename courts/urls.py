@@ -8,7 +8,7 @@ urls_patterns = [
         name="list-create-courts",
     ),
     path(
-        "update/courts/<int:pk>",
+        "update/courts/<int:pk>/",
         CourtRetrieveUpdateDestroyView.as_view(),
         name="retrieve-update-destroy-courts",
     ),
