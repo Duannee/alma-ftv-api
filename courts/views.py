@@ -3,11 +3,11 @@ from .models import Court
 from .serializers import CourtSerializer
 
 
-class CourtView(ListCreateAPIView):
+class CourtListCreateView(ListCreateAPIView):
     queryset = Court.objects.all()
     serializer_class = CourtSerializer
 
 
-class CourtView(RetrieveUpdateDestroyAPIView):
+class CourtRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Court.objects.all()
     serializer_class = CourtSerializer
