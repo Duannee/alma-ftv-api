@@ -3,11 +3,11 @@ from .models import StudentPlans
 from .serializers import StudentPlanSerializer
 
 
-class ListCourtsListCreateView(ListCreateAPIView):
+class StudentPlanListCreateView(ListCreateAPIView):
     queryset = StudentPlans.objects.all()
     serializer_class = StudentPlanSerializer
 
 
-class ListCourtsRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+class StudentPlanRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = StudentPlans.objects.all()
     serializer_class = StudentPlanSerializer
