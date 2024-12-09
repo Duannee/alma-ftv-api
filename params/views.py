@@ -1,3 +1,13 @@
-from django.shortcuts import render
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from .models import Params
+from .serializers import ParamSerializer
 
-# Create your views here.
+
+class ParamsListCreateView(ListCreateAPIView):
+    queryset = Params.objects.all()
+    serializer_class = ParamSerializer
+
+
+class ParamsRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+    queryset = Params.objects.all()
+    serializer_class = ParamSerializer

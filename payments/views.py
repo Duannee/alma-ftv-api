@@ -1,12 +1,16 @@
 from django.forms import ValidationError
 from django.shortcuts import get_object_or_404
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import (
+    CreateAPIView,
+    ListAPIView,
+    RetrieveUpdateDestroyAPIView,
+)
 from .models import Payment
 from .serializers import PaymentSerializer
 from students.models import Student
 
 
-class CreatePaymentView(CreateAPIView):
+class PaymentCreateView(CreateAPIView):
     serializer_class = PaymentSerializer
 
     def perform_create(self, serializer):
@@ -17,3 +21,13 @@ class CreatePaymentView(CreateAPIView):
                 {"error": "Already exists a payment for this student"}
             )
         return serializer.save(student=student_payment)
+
+
+class PaymentListView(ListAPIView):
+    queryset = Payment.objects.all()
+    serializer_class = PaymentSerializer
+
+
+class PaymentRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+    queryset = Payment.objects.all()
+    serializer_class = PaymentSerializer
