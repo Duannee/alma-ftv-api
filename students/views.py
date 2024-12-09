@@ -3,7 +3,7 @@ from .models import Student
 from .serializers import StudentSerializer
 
 
-class StudentCreateView(ListCreateAPIView):
+class StudentListCreateView(ListCreateAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
