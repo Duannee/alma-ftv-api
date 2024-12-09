@@ -3,11 +3,11 @@ from .models import Params
 from .serializers import ParamSerializer
 
 
-class ListCourtsListCreateView(ListCreateAPIView):
+class ParamsListCreateView(ListCreateAPIView):
     queryset = Params.objects.all()
     serializer_class = ParamSerializer
 
 
-class ListCourtsRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+class ParamsRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Params.objects.all()
     serializer_class = ParamSerializer
