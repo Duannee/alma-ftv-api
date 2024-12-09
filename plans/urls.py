@@ -6,7 +6,7 @@ urls_patterns = [
         "create/plans/", StudentPlanListCreateView.as_view(), name="list-create-plans"
     ),
     path(
-        "update/plans/<int:pk>",
+        "update/plans/<int:pk>/",
         StudentPlanRetrieveUpdateDestroyView.as_view(),
         name="retrieve-update-destroy-plans",
     ),
