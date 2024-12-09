@@ -1,3 +1,13 @@
-from django.shortcuts import render
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from .models import StudentPlans
+from .serializers import StudentPlanSerializer
 
-# Create your views here.
+
+class ListCourtsListCreateView(ListCreateAPIView):
+    queryset = StudentPlans.objects.all()
+    serializer_class = StudentPlanSerializer
+
+
+class ListCourtsRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+    queryset = StudentPlans.objects.all()
+    serializer_class = StudentPlanSerializer
