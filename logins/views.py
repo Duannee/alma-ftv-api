@@ -13,7 +13,7 @@ class LoginView(CreateAPIView):
     def post(self, request, *args, **kwargs):
         email = request.data.get("email")
         password = request.data.get("password")
-
+        
         if not email or not password:
             raise AuthenticationFailed("Email and password are required")
 
@@ -23,11 +23,11 @@ class LoginView(CreateAPIView):
 
         refresh = RefreshToken.for_user(user)
 
-        user_data = LoginUserSerializer(user).data
-
         return Response(
             {
-                **user_data,
+                "id": user.id,
+                "email": user.email,
+                "first_name": user.first_name,
                 "access_token": str(refresh.access_token),
                 "refresh_token": str(refresh),
             }
