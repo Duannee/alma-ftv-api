@@ -58,6 +58,7 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     "rest_framework",
+    "corsheaders",
 ]
 
 
@@ -76,8 +77,25 @@ LOCAL_APPS = [
 
 INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + LOCAL_APPS
 
+<<<<<<< HEAD
 
 MIDDLEWARE = [
+=======
+AUTH_USER_MODEL = "users.User"
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+]
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
+
+
+MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+>>>>>>> 1fdc86f65beaba3edf60ab1e08ea9fe1ac76b0e4
     "django.middleware.common.CommonMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -94,6 +112,12 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
     ],
+<<<<<<< HEAD
+=======
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+>>>>>>> 1fdc86f65beaba3edf60ab1e08ea9fe1ac76b0e4
 }
 
 SIMPLE_JWT = {
