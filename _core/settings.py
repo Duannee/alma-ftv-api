@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 import dotenv
 import os
@@ -36,7 +37,7 @@ if ENVIRONMENT == "development":
 else:
     DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 RENDER_EXTERNAL_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
 
@@ -75,7 +76,9 @@ LOCAL_APPS = [
 
 INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + LOCAL_APPS
 
+
 MIDDLEWARE = [
+    "django.middleware.common.CommonMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -86,6 +89,19 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "_core.urls"
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.AllowAny",
+    ],
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}
+
 
 TEMPLATES = [
     {
