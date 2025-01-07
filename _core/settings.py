@@ -14,6 +14,7 @@ from datetime import timedelta
 from pathlib import Path
 import dotenv
 import os
+import dj_database_url
 from django.core.management.utils import get_random_secret_key
 
 dotenv.load_dotenv()
@@ -80,8 +81,8 @@ INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + LOCAL_APPS
 AUTH_USER_MODEL = "users.User"
 
 AUTHENTICATION_BACKENDS = [
-    "users.authentication.EmailBackend",  
-    "django.contrib.auth.backends.ModelBackend",  
+    "users.authentication.EmailBackend",
+    "django.contrib.auth.backends.ModelBackend",
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -90,9 +91,10 @@ CORS_ALLOWED_ORIGINS = [
 
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -100,8 +102,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-
-
 
 
 ROOT_URLCONF = "_core.urls"
@@ -148,6 +148,17 @@ DATABASES = {
     }
 }
 
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if DATABASE_URL:
+    db_from_env = dj_database_url.config(
+        default=DATABASE_URL, conn_max_age=500, ssl_require=True
+    )
+    DATABASES["default"].update(db_from_env)
+    DEBUG = False
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
