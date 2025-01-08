@@ -86,7 +86,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "https://alma-ftv-api.onrender.com/",
 ]
 
 
