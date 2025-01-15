@@ -1,9 +1,9 @@
 from rest_framework import serializers
 
-from .models import AdmissionModel
+from users.models import User
 
 
 class AdmissionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = AdmissionModel
-        fields = "__all__"
+        model = User
+        fields = ["id", "username", "email", "is_student"]
