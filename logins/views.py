@@ -28,7 +28,7 @@ class LoginView(CreateAPIView):
                 "id": user.id,
                 "email": user.email,
                 "first_name": user.first_name,
-                "is_superuser": False,
+                "is_student": False,
                 "access_token": str(refresh.access_token),
                 "refresh_token": str(refresh),
             }
