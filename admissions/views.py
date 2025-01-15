@@ -4,18 +4,22 @@ from .serializers import AdmissionSerializer
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
+from users.permissions import isSuperUser
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 class AdmissionListView(ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [isSuperUser]
     queryset = User.objects.filter(is_student=False)
     serializer_class = AdmissionSerializer
-    permission_classes = [IsAdminUser]
 
 
 class ApproveAdmissionView(UpdateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [isSuperUser]
     queryset = User.objects.filter(is_student=False)
     serializer_class = AdmissionSerializer
-    permission_classes = [IsAdminUser]
 
     def update(self, request, *args, **kwargs):
         user = self.get_object()
@@ -25,8 +29,9 @@ class ApproveAdmissionView(UpdateAPIView):
 
 
 class RejectAdmissionView(DestroyAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [isSuperUser]
     queryset = User.objects.filter(is_student=False)
-    permission_classes = [IsAdminUser]
 
     def destroy(self, request, *args, **kwargs):
         user = self.get_object()
