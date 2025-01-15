@@ -4,11 +4,9 @@ from users.models import User
 
 
 class LoginUserSerializer(serializers.Serializer):
-    password = serializers.CharField(
-        write_only=True, style={"input_type": "password"}
-    )
+    password = serializers.CharField(write_only=True, style={"input_type": "password"})
 
     class Meta:
         model = User
-        fields = ["id", "first_name", "email", "password"]
-        read_only_fields = ["id", "first_name"]
+        fields = ["id", "first_name", "email", "password", "is_superuser"]
+        read_only_fields = ["id", "first_name", "is_superuser"]
