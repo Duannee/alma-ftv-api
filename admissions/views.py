@@ -1,13 +1,10 @@
-from rest_framework.generics import UpdateAPIView, DestroyAPIView
-from .models import Admission
+from rest_framework.generics import ListAPIView, UpdateAPIView, DestroyAPIView
+from users.models import User
 from .serializers import AdmissionSerializer
+from rest_framework.permissions import IsAdminUser
 
 
-class AdmissionUpdateView(UpdateAPIView):
-    queryset = Admission.objects.all()
+class AdmissionListView(ListAPIView):
+    queryset = User.objects.filter(is_student=False)
     serializer_class = AdmissionSerializer
-
-
-class AdmissionDeleteView(DestroyAPIView):
-    queryset = Admission.objects.all()
-    serializer_class = AdmissionSerializer
+    permission_classes = [IsAdminUser]
