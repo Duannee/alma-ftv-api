@@ -74,6 +74,7 @@ LOCAL_APPS = [
     "plans.apps.PlansConfig",
     "list_courts.apps.ListCourtsConfig",
     "params.apps.ParamsConfig",
+    "admissions.apps.AdmissionConfig",
 ]
 
 INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + LOCAL_APPS
@@ -161,9 +162,7 @@ if DATABASE_URL:
     DEBUG = False
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-    STATICFILES_STORAGE = (
-        "whitenoise.storage.CompressedManifestStaticFilesStorage"
-    )
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
