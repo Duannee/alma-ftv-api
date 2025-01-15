@@ -1,0 +1,20 @@
+[tool.ruff]
+line-length = 79 
+extend-exclude = ["migrations"] 
+
+[tool.ruff.lint]
+preview = true
+select = ["I", "F", "E", "W", "DJ"]
+
+[tool.taskipy.tasks]
+lint = "ruff check . && ruff check . --diff"
+format = "ruff check . --fix && ruff format ."
+run = "python manage.py runserver"
+makemigrations = "python manage.py makemigrations"
+migrate = "python manage.py migrate"
+createsuperuser = "python manage.py createsuperuser"
+pre_test = "task lint"
+test = "python manage.py test"
+
+
+
