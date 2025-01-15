@@ -22,3 +22,16 @@ class ApproveAdmissionView(UpdateAPIView):
         user.is_student = True
         user.save()
         return Response({"message": "Approved user!"}, status=status.HTTP_200_OK)
+
+
+class RejectAdmissionView(DestroyAPIView):
+    queryset = User.objects.filter(is_student=False)
+    permission_classes = [IsAdminUser]
+
+    def destroy(self, request, *args, **kwargs):
+        user = self.get_object()
+        user.delete()
+        return Response(
+            {"message": "Application for admission rejected"},
+            status=status.HTTP_204_NO_CONTENT,
+        )
