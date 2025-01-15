@@ -5,9 +5,8 @@ from django.utils.crypto import get_random_string
 
 class User(AbstractUser):
     email = models.EmailField(unique=True)
-    groups = models.ManyToManyField(
-        Group, related_name="custom_user_set", blank=True
-    )
+    is_student = models.BooleanField(default=False)
+    groups = models.ManyToManyField(Group, related_name="custom_user_set", blank=True)
     user_permissions = models.ManyToManyField(
         Permission, related_name="custom_user_permissions", blank=True
     )
