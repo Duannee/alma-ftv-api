@@ -1,3 +1,13 @@
-from django.shortcuts import render
+from rest_framework.generics import UpdateAPIView, DestroyAPIView
+from .models import Admission
+from .serializers import AdmissionSerializer
 
-# Create your views here.
+
+class AdmissionUpdateView(UpdateAPIView):
+    queryset = Admission.objects.all()
+    serializer_class = AdmissionSerializer
+
+
+class AdmissionDeleteView(DestroyAPIView):
+    queryset = Admission.objects.all()
+    serializer_class = AdmissionSerializer
