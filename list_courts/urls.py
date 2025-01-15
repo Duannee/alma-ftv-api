@@ -1,5 +1,9 @@
 from django.urls import path
-from .views import ListCourtsListCreateView, ListCourtsRetrieveUpdateDestroyView
+
+from .views import (
+    ListCourtsListCreateView,
+    ListCourtsRetrieveUpdateDestroyView,
+)
 
 urls_patterns = [
     path(

@@ -1,6 +1,8 @@
-from rest_framework import serializers
-from .models import Student
 import base64
+
+from rest_framework import serializers
+
+from .models import Student
 
 
 class Base64ImageFieldValidator:
@@ -30,7 +32,9 @@ class StudentSerializer(serializers.ModelSerializer):
     def validate(self, data):
         for key in data.keys():
             if key not in self.fields:
-                raise serializers.ValidationError({key: "This field does not exist."})
+                raise serializers.ValidationError(
+                    {key: "This field does not exist."}
+                )
         return data
 
     def validate(self, attrs):

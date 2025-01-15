@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('students', '0002_alter_student_email'),
+        ("students", "0002_alter_student_email"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='student',
-            name='profile_img',
+            model_name="student",
+            name="profile_img",
             field=models.TextField(blank=True, null=True),
         ),
     ]

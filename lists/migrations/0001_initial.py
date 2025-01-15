@@ -5,21 +5,45 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('students', '0003_student_profile_img'),
+        ("students", "0003_student_profile_img"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='List',
+            name="List",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date_day', models.DateField(auto_now_add=True)),
-                ('category', models.CharField(choices=[('BEGINNER', 'BEGINNER'), ('INTERMEDIARY', 'INTERMEDIARY'), ('ADVANCED', 'ADVANCED')], max_length=20)),
-                ('student_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='list', to='students.student')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("date_day", models.DateField(auto_now_add=True)),
+                (
+                    "category",
+                    models.CharField(
+                        choices=[
+                            ("BEGINNER", "BEGINNER"),
+                            ("INTERMEDIARY", "INTERMEDIARY"),
+                            ("ADVANCED", "ADVANCED"),
+                        ],
+                        max_length=20,
+                    ),
+                ),
+                (
+                    "student_id",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="list",
+                        to="students.student",
+                    ),
+                ),
             ],
         ),
     ]

@@ -1,6 +1,7 @@
 from django.db import models
-from students.models import Student
 from django.utils.timezone import now
+
+from students.models import Student
 
 
 class Payment(models.Model):

@@ -5,22 +5,49 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('students', '0001_initial'),
+        ("students", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Payment',
+            name="Payment",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('pay_day', models.DateField()),
-                ('value', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('status', models.CharField(choices=[('UP_TO_DATE', 'UP_TO_DATE'), ('PENDING', 'PENDING'), ('LATE', 'LATE')], default='UP_TO_DATE', max_length=20)),
-                ('student', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='students.student')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("pay_day", models.DateField()),
+                (
+                    "value",
+                    models.DecimalField(decimal_places=2, max_digits=10),
+                ),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("UP_TO_DATE", "UP_TO_DATE"),
+                            ("PENDING", "PENDING"),
+                            ("LATE", "LATE"),
+                        ],
+                        default="UP_TO_DATE",
+                        max_length=20,
+                    ),
+                ),
+                (
+                    "student",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="students.student",
+                    ),
+                ),
             ],
         ),
     ]

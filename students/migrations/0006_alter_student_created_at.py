@@ -5,15 +5,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('students', '0005_rename_user_id_student_user'),
+        ("students", "0005_rename_user_id_student_user"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='student',
-            name='created_at',
-            field=models.DateTimeField(default=django.utils.timezone.now, editable=False),
+            model_name="student",
+            name="created_at",
+            field=models.DateTimeField(
+                default=django.utils.timezone.now, editable=False
+            ),
         ),
     ]

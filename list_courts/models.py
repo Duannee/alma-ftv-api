@@ -1,7 +1,8 @@
 from django.db import models
+from django.utils.timezone import now
+
 from courts.models import Court
 from lists.models import List
-from django.utils.timezone import now
 
 
 class ListCourt(models.Model):
