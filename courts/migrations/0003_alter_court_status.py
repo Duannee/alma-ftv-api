@@ -4,15 +4,17 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('courts', '0002_court_created_at_court_updated_at'),
+        ("courts", "0002_court_created_at_court_updated_at"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='court',
-            name='status',
-            field=models.CharField(choices=[('ACTIVE', 'ACTIVE'), ('INACTIVE', 'INACTIVE')], max_length=8),
+            model_name="court",
+            name="status",
+            field=models.CharField(
+                choices=[("ACTIVE", "ACTIVE"), ("INACTIVE", "INACTIVE")],
+                max_length=8,
+            ),
         ),
     ]

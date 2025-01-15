@@ -1,6 +1,7 @@
 from django.db import models
-from students.models import Student
 from django.utils.timezone import now
+
+from students.models import Student
 
 
 class StudentPlans(models.Model):
@@ -17,7 +18,9 @@ class StudentPlans(models.Model):
         Student, on_delete=models.CASCADE, related_name="student_plans"
     )
     payment_day = models.IntegerField()
-    weekly_frequency = models.CharField(max_length=2, choices=FREQUENCY_CHOICES)
+    weekly_frequency = models.CharField(
+        max_length=2, choices=FREQUENCY_CHOICES
+    )
     type_plan = models.CharField(max_length=10, choices=PLAN_CHOICES)
     value = models.DecimalField(max_digits=7, decimal_places=2)
     status = models.CharField(max_length=8, choices=STATUS_CHOICES)

@@ -5,16 +5,20 @@ from rest_framework.generics import (
     ListAPIView,
     RetrieveUpdateDestroyAPIView,
 )
+
+from students.models import Student
+
 from .models import Payment
 from .serializers import PaymentSerializer
-from students.models import Student
 
 
 class PaymentCreateView(CreateAPIView):
     serializer_class = PaymentSerializer
 
     def perform_create(self, serializer):
-        student_payment = get_object_or_404(Student, pk=self.kwargs.get("student_id"))
+        student_payment = get_object_or_404(
+            Student, pk=self.kwargs.get("student_id")
+        )
 
         if Payment.objects.filter(student=student_payment).exists():
             raise ValidationError(

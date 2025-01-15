@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.utils.timezone import now
 
 
@@ -9,9 +8,15 @@ class Student(models.Model):
         ("INTERMEDIARY", "INTERMEDIARY"),
         ("ADVANCED", "ADVANCED"),
     ]
-    GENRE_CHOICE = [("FEMALE", "FEMALE"), ("MALE", "MALE"), ("OTHERS", "OTHERS")]
+    GENRE_CHOICE = [
+        ("FEMALE", "FEMALE"),
+        ("MALE", "MALE"),
+        ("OTHERS", "OTHERS"),
+    ]
 
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="students")
+    user = models.ForeignKey(
+        "users.User", on_delete=models.CASCADE, related_name="students"
+    )
     name = models.CharField(max_length=255)
     birth_date = models.DateField()
     email = models.EmailField(unique=True)

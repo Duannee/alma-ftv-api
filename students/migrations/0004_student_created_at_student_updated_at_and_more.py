@@ -7,7 +7,6 @@ from django.utils.timezone import now
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("students", "0003_student_profile_img"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),

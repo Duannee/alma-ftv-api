@@ -6,31 +6,36 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('payments', '0001_initial'),
-        ('students', '0006_alter_student_created_at'),
+        ("payments", "0001_initial"),
+        ("students", "0006_alter_student_created_at"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='payment',
-            old_name='pay_day',
-            new_name='payment_date',
+            model_name="payment",
+            old_name="pay_day",
+            new_name="payment_date",
         ),
         migrations.AddField(
-            model_name='payment',
-            name='created_at',
-            field=models.DateTimeField(default=django.utils.timezone.now, editable=False),
+            model_name="payment",
+            name="created_at",
+            field=models.DateTimeField(
+                default=django.utils.timezone.now, editable=False
+            ),
         ),
         migrations.AddField(
-            model_name='payment',
-            name='updated_at',
+            model_name="payment",
+            name="updated_at",
             field=models.DateTimeField(auto_now=True),
         ),
         migrations.AlterField(
-            model_name='payment',
-            name='student',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='payments', to='students.student'),
+            model_name="payment",
+            name="student",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="payments",
+                to="students.student",
+            ),
         ),
     ]

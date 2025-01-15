@@ -3,7 +3,11 @@ from django.utils.timezone import now
 
 
 class Coach(models.Model):
-    GENRE_CHOICE = [("FEMALE", "FEMALE"), ("MALE", "MALE"), ("OTHERS", "OTHERS")]
+    GENRE_CHOICE = [
+        ("FEMALE", "FEMALE"),
+        ("MALE", "MALE"),
+        ("OTHERS", "OTHERS"),
+    ]
     name = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=14)
