@@ -4,6 +4,18 @@ from rest_framework import serializers
 
 from .models import Student
 
+from users.models import User
+
+
+class UserStudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+        ]
+
 
 class Base64ImageFieldValidator:
     @staticmethod
@@ -24,6 +36,8 @@ class StudentSerializer(serializers.ModelSerializer):
         validators=[Base64ImageFieldValidator.validate_base_64_image],
     )
 
+    user = UserStudentSerializer(read_only=True)
+
     class Meta:
         model = Student
         fields = [
@@ -35,6 +49,7 @@ class StudentSerializer(serializers.ModelSerializer):
             "profile_img",
             "created_at",
             "updated_at",
+            "user",
         ]
         read_only_fields = ["created_at", "updated_at"]
 
