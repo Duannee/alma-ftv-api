@@ -26,28 +26,26 @@ class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = "__all__"
+        fields = [
+            "id",
+            "birth_date",
+            "phone",
+            "genre",
+            "category",
+            "profile_img",
+            "created_at",
+            "updated_at",
+        ]
         read_only_fields = ["created_at", "updated_at"]
 
     def validate(self, data):
         for key in data.keys():
             if key not in self.fields:
-                raise serializers.ValidationError(
-                    {key: "This field does not exist."}
-                )
+                raise serializers.ValidationError({key: "This field does not exist."})
         return data
 
-    def validate(self, attrs):
-        name = attrs.get("name")
-        email = attrs.get("email")
-
-        if Student.objects.filter(name=name).exists():
-            raise serializers.ValidationError(
-                "There is already a student with that name, please choose another one"
-            )
-
-        if Student.objects.filter(email=email).exists():
-            raise serializers.ValidationError(
-                "There is already a student with that email, please choose another one"
-            )
-        return attrs
+    def create(self, validated_data):
+        request = self.context.get("request")
+        user = request.user
+        validated_data["user"] = user
+        return super().create(validated_data)
