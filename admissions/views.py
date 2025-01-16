@@ -1,11 +1,12 @@
-from rest_framework.generics import ListAPIView, UpdateAPIView, DestroyAPIView
-from users.models import User
-from .serializers import AdmissionSerializer
-from rest_framework.permissions import IsAdminUser
-from rest_framework.response import Response
 from rest_framework import status
-from users.permissions import isSuperUser
+from rest_framework.generics import DestroyAPIView, ListAPIView, UpdateAPIView
+from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
+
+from users.models import User
+from users.permissions import isSuperUser
+
+from .serializers import AdmissionSerializer
 
 
 class AdmissionListView(ListAPIView):
