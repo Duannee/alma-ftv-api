@@ -17,9 +17,7 @@ class Student(models.Model):
     user = models.ForeignKey(
         "users.User", on_delete=models.CASCADE, related_name="students"
     )
-    name = models.CharField(max_length=255)
     birth_date = models.DateField()
-    email = models.EmailField(unique=True)
     phone = models.CharField(max_length=20)
     genre = models.CharField(max_length=7, choices=GENRE_CHOICE)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICE)
