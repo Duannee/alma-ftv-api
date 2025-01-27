@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views import ParamsListCreateView, ParamsRetrieveUpdateDestroyView
 
-urls_patterns = [
+urlpatterns = [
     path(
         "create/params/",
         ParamsListCreateView.as_view(),
