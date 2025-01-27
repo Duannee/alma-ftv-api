@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from .models import Params
+from .models import ListParams
 
 
-class ParamSerializer(serializers.ModelSerializer):
+class ListParamSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Params
+        model = ListParams
         fields = [
             "id",
             "class_date",

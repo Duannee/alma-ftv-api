@@ -1,4 +1,4 @@
-from rest_framework.generics import CreateAPIView, RetrieveAPIView
+from rest_framework.generics import CreateAPIView
 
 from .models import User
 from .serializers import UserSerializer

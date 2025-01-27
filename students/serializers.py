@@ -2,9 +2,9 @@ import base64
 
 from rest_framework import serializers
 
-from .models import Student
-
 from users.models import User
+
+from .models import Student
 
 
 class UserStudentSerializer(serializers.ModelSerializer):

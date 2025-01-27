@@ -12,6 +12,6 @@ class ListsListCreateView(ListCreateAPIView):
     serializer_class = ListSerializer
 
 
-class ListRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+class ListsRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = List.objects.all()
     serializer_class = ListSerializer

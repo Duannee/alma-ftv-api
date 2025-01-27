@@ -3,15 +3,15 @@ from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
 )
 
-from .models import Params
-from .serializers import ParamSerializer
+from .models import ListParams
+from .serializers import ListParamSerializer
 
 
 class ParamsListCreateView(ListCreateAPIView):
-    queryset = Params.objects.all()
-    serializer_class = ParamSerializer
+    queryset = ListParams.objects.all()
+    serializer_class = ListParamSerializer
 
 
 class ParamsRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    queryset = Params.objects.all()
-    serializer_class = ParamSerializer
+    queryset = ListParams.objects.all()
+    serializer_class = ListParamSerializer

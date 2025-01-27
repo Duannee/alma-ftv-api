@@ -1,23 +1,26 @@
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from .models import List
+from .utils import can_add_to_list
 
 
 class ListSerializer(serializers.ModelSerializer):
-    student = serializers.StringRelatedField()
+    student = serializers.PrimaryKeyRelatedField(
+        queryset=List.objects.values_list("student", flat=True)
+    )
 
     class Meta:
         model = List
-        fields = ["id", "date_day", "student_id", "category"]
+        fields = ["id", "student", "list_params", "class_time"]
         read_only_fields = ["created_at", "updated_at"]
 
-        def validate(self, data):
-            student = data.get("student_id")
-            category = data.get("category")
+    def validate(self, data):
+        student = data["student"]
 
-            if student.category != category:
-                raise serializers.ValidationError(
-                    "The student's category does not match the list category."
-                )
+        if not can_add_to_list(student):
+            raise ValidationError(
+                "You have already reached the frequency limit this week."
+            )
 
-            return data
+        return data
