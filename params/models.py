@@ -8,6 +8,7 @@ class ListParams(models.Model):
         ("INTERMEDIARY", "INTERMEDIARY"),
         ("ADVANCED", "ADVANCED"),
         ("WARNING", "WARNING"),
+        ("WEEKEND", "WEEKEND"),
     ]
     class_date = models.DateField()
     status = models.BooleanField(default=True)
