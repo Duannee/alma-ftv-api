@@ -19,7 +19,6 @@ class Student(models.Model):
         ("3X", "3X"),
         ("4X", "4X"),
         ("5X", "5X"),
-        ("6X", "6X"),
     ]
 
     user = models.ForeignKey(
