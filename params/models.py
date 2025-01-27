@@ -7,6 +7,7 @@ class ListParams(models.Model):
         ("BEGINNER", "BEGINNER"),
         ("INTERMEDIARY", "INTERMEDIARY"),
         ("ADVANCED", "ADVANCED"),
+        ("WARNING", "WARNING"),
     ]
     class_date = models.DateField()
     status = models.BooleanField(default=True)
