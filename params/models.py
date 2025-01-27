@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.timezone import now
 
 
-class Params(models.Model):
+class ListParams(models.Model):
     CATEGORY_CHOICE = [
         ("BEGINNER", "BEGINNER"),
         ("INTERMEDIARY", "INTERMEDIARY"),
