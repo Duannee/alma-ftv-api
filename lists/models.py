@@ -15,14 +15,14 @@ class List(models.Model):
         ("08:15", "08:15"),
     ]
     student = models.ForeignKey(
-        "students.student", on_delete=models.CASCADE, related_name="lists"
+        "students.Student", on_delete=models.CASCADE, related_name="lists"
     )
     list_params = models.ForeignKey(
-        "params.listparams", on_delete=models.CASCADE, related_name="lists"
+        "params.ListParams", on_delete=models.CASCADE, related_name="lists"
     )
     class_time = models.CharField(max_length=5, choices=CLASS_TIME_CHOICES)
     created_at = models.DateTimeField(default=now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.student.name} - {self.date_day} - {self.class_time}"
+        return f"{self.student.id}  - {self.class_time}"
