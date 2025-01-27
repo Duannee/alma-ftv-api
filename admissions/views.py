@@ -24,6 +24,7 @@ class ApproveAdmissionView(UpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         user = self.get_object()
+
         user.is_student = True
         user.save()
         return Response({"message": "Approved user!"}, status=status.HTTP_200_OK)
