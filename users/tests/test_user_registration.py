@@ -60,3 +60,17 @@ class UserRegistrationTestCase(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("email", response.data)
+
+    def test_create_user_with_invalid_email_fails(self):
+        """Test if user creation failed when providing an invalid email"""
+        payload = {
+            "first_name": "test",
+            "last_name": "tests",
+            "email": "test.com",
+            "password": "testpassword123",
+            "is_student": False,
+        }
+        response = self.client.post(self.register_url, payload)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("email", response.data)
+        self.assertFalse(User.objects.filter(email=payload["email"]).exists())
