@@ -74,3 +74,11 @@ class UserRegistrationTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("email", response.data)
         self.assertFalse(User.objects.filter(email=payload["email"]).exists())
+
+    def test_user_password_is_hashed(self):
+        """Tests whether the user's password is stored in hashed form"""
+        response = self.client.post(self.register_url, self.valid_payload)
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        user = User.objects.get(email=self.valid_payload["email"])
+        self.assertTrue(user.check_password(self.valid_payload["password"]))
