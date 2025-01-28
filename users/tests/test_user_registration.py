@@ -25,3 +25,17 @@ class UserRegistrationTestCase(TestCase):
         self.assertIn("id", response.data)
         self.assertEqual(response.data["email"], self.valid_payload["email"])
         self.assertTrue(User.objects.filter(email=self.valid_payload["email"]).exists())
+
+    def test_create_user_without_email_fails(self):
+        """Tests whether user creation fails when email is not provided"""
+        payload = {
+            "first_name": "test",
+            "last_name": "tests",
+            "password": "testpassword123",
+            "is_student": False,
+        }
+        response = self.client.post(self.register_url, payload)
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("email", response.data)
+        self.assertFalse(User.objects.filter(first_name=payload["first_name"]).exists())
