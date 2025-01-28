@@ -82,3 +82,26 @@ class UserRegistrationTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         user = User.objects.get(email=self.valid_payload["email"])
         self.assertTrue(user.check_password(self.valid_payload["password"]))
+
+    def test_user_creation_with_groups_and_permissions(self):
+        """Tests whether a user can be created with associated groups and permissions"""
+        from django.contrib.auth.models import Group, Permission
+
+        group = Group.objects.create(name="TestGroup")
+        permission = Permission.objects.first()
+
+        payload = {
+            "first_name": "test",
+            "last_name": "tests",
+            "email": "test@example.com",
+            "password": "testpassword123",
+            "is_student": False,
+            "groups": [group.id],
+            "user_permissions": [permission.id],
+        }
+        response = self.client.post(self.register_url, payload, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        user = User.objects.get(email=payload["email"])
+        self.assertIn(group, user.groups.all())
+        self.assertIn(permission, user.user_permissions.all())
