@@ -1,12 +1,9 @@
-from rest_framework import serializers
-
-from users.models import User
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
-class LoginUserSerializer(serializers.Serializer):
-    password = serializers.CharField(write_only=True, style={"input_type": "password"})
-
-    class Meta:
-        model = User
-        fields = ["id", "first_name", "email", "password", "is_student"]
-        read_only_fields = ["id", "first_name", "is_student"]
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        token["is_student"] = user.is_student
+        return token

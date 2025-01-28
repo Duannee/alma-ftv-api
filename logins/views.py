@@ -1,14 +1,13 @@
 from django.contrib.auth import authenticate
 from rest_framework.exceptions import AuthenticationFailed
-from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenObtainPairView
 
-from .serializers import LoginUserSerializer
+from .serializers import CustomTokenObtainPairSerializer
 
 
-class LoginView(CreateAPIView):
-    serializer_class = LoginUserSerializer
+class CustomLoginView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
 
     def post(self, request, *args, **kwargs):
         email = request.data.get("email")
@@ -21,15 +20,17 @@ class LoginView(CreateAPIView):
         if not user:
             raise AuthenticationFailed("Invalid credentials")
 
-        refresh = RefreshToken.for_user(user)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        tokens = serializer.validated_data
 
         return Response(
             {
                 "id": user.id,
                 "email": user.email,
                 "first_name": user.first_name,
-                "is_student": False,
-                "access_token": str(refresh.access_token),
-                "refresh_token": str(refresh),
+                "is_student": user.is_student,
+                "access_token": tokens["access"],
+                "refresh_token": tokens["refresh"],
             }
         )
