@@ -1,6 +1,11 @@
 from django.urls import path
 
-from .views import ListsListCreateView, ListsRetrieveUpdateDestroyView
+from .views import (
+    ListByTimeView,
+    ListsListCreateView,
+    ListsRetrieveUpdateDestroyView,
+    StudentsAvailableForCourtsView,
+)
 
 urlpatterns = [
     path("create/lists/", ListsListCreateView.as_view(), name="list-create-list"),
@@ -8,5 +13,11 @@ urlpatterns = [
         "update/lists/<int:pk>/",
         ListsRetrieveUpdateDestroyView.as_view(),
         name="retrieve-update-destroy-list",
+    ),
+    path("list/by-time/", ListByTimeView.as_view(), name="list-by-time"),
+    path(
+        "students/available/",
+        StudentsAvailableForCourtsView.as_view(),
+        name="students-available",
     ),
 ]

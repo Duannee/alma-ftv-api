@@ -1,6 +1,7 @@
 from django.urls import path
 
 from .views import (
+    AllocateStudentsCourtsView,
     ListCourtsListCreateView,
     ListCourtsRetrieveUpdateDestroyView,
 )
@@ -15,5 +16,10 @@ urls_patterns = [
         "update/list/courts/<int:pk>",
         ListCourtsRetrieveUpdateDestroyView.as_view(),
         name="retrieve-update-destroy-list-courts",
+    ),
+    path(
+        "allocate/courts/",
+        AllocateStudentsCourtsView.as_view(),
+        name="allocate-student-court",
     ),
 ]
