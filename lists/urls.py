@@ -4,6 +4,7 @@ from .views import (
     ListsListCreateView,
     ListsRetrieveUpdateDestroyView,
     ListByTimeView,
+    StudentsAvailableForCourtsView,
 )
 
 urlpatterns = [
@@ -14,4 +15,9 @@ urlpatterns = [
         name="retrieve-update-destroy-list",
     ),
     path("list/by-time/", ListByTimeView.as_view(), name="list-by-time"),
+    path(
+        "students/available/",
+        StudentsAvailableForCourtsView.as_view(),
+        name="students-available",
+    ),
 ]
