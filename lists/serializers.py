@@ -10,6 +10,9 @@ from students.models import Student
 class ListSerializer(serializers.ModelSerializer):
     student = serializers.PrimaryKeyRelatedField(queryset=Student.objects.all())
     student_name = serializers.CharField(source="student.name", read_only=True)
+    category_name = serializers.CharField(
+        source="list_params.category.name", read_only=True
+    )
 
     class Meta:
         model = List
@@ -18,6 +21,12 @@ class ListSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         student = data["student"]
+        list_params = data["list_params"]
+
+        if student.category != list_params.category:
+            raise ValidationError(
+                "You can only subscribe to lists in your own category."
+            )
 
         if not can_add_to_list(student):
             raise ValidationError(
