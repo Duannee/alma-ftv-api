@@ -4,16 +4,16 @@ from django.utils.timezone import localtime
 
 from .models import List
 from .utils import can_add_to_list
+from students.models import Student
 
 
 class ListSerializer(serializers.ModelSerializer):
-    student = serializers.PrimaryKeyRelatedField(
-        queryset=List.objects.values_list("student", flat=True)
-    )
+    student = serializers.PrimaryKeyRelatedField(queryset=Student.objects.all())
+    student_name = serializers.CharField(source="student.name", read_only=True)
 
     class Meta:
         model = List
-        fields = ["id", "student", "list_params", "class_time"]
+        fields = ["id", "student", "student_name", "list_params", "class_time"]
         read_only_fields = ["created_at", "updated_at"]
 
     def validate(self, data):
