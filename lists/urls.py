@@ -9,4 +9,5 @@ urlpatterns = [
         ListsRetrieveUpdateDestroyView.as_view(),
         name="retrieve-update-destroy-list",
     ),
+    path("list/by-time/", ListsListCreateView.as_view(), name="list-by-time"),
 ]
