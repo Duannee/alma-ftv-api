@@ -8,10 +8,10 @@ from .models import ListCourt
 
 class ListCourtSerializer(serializers.ModelSerializer):
     court = serializers.PrimaryKeyRelatedField(
-        queryset=Court.objects.all(), many=True
+        queryset=Court.objects.all(),
     )
     lists = serializers.PrimaryKeyRelatedField(
-        queryset=List.objects.all(), many=True
+        queryset=List.objects.all(),
     )
 
     class Meta:
