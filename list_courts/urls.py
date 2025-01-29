@@ -1,9 +1,9 @@
 from django.urls import path
 
 from .views import (
+    AllocateStudentsCourtsView,
     ListCourtsListCreateView,
     ListCourtsRetrieveUpdateDestroyView,
-    AllocateStudentsCourtsView,
 )
 
 urls_patterns = [

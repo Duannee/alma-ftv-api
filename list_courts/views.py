@@ -1,15 +1,16 @@
+from rest_framework import status
 from rest_framework.generics import (
     CreateAPIView,
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
 )
+from rest_framework.response import Response
+
+from courts.models import Court
+from lists.models import List
 
 from .models import ListCourt
 from .serializers import ListCourtSerializer
-from rest_framework.response import Response
-from rest_framework import status
-from courts.models import Court
-from lists.models import List
 
 
 class ListCourtsListCreateView(ListCreateAPIView):

@@ -1,9 +1,9 @@
 from django.urls import path
 
 from .views import (
+    ListByTimeView,
     ListsListCreateView,
     ListsRetrieveUpdateDestroyView,
-    ListByTimeView,
     StudentsAvailableForCourtsView,
 )
 

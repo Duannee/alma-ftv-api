@@ -1,10 +1,11 @@
+from django.utils.timezone import localtime
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
-from django.utils.timezone import localtime
+
+from students.models import Student
 
 from .models import List
 from .utils import can_add_to_list
-from students.models import Student
 
 
 class ListSerializer(serializers.ModelSerializer):

@@ -1,13 +1,14 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import (
+    ListAPIView,
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
-    ListAPIView,
 )
+
+from list_courts.models import ListCourt
 
 from .models import List
 from .serializers import ListSerializer
-from django_filters.rest_framework import DjangoFilterBackend
-from list_courts.models import ListCourt
 
 
 class ListsListCreateView(ListCreateAPIView):
