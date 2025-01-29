@@ -1,6 +1,10 @@
 from django.urls import path
 
-from .views import ListsListCreateView, ListsRetrieveUpdateDestroyView
+from .views import (
+    ListsListCreateView,
+    ListsRetrieveUpdateDestroyView,
+    ListByTimeView,
+)
 
 urlpatterns = [
     path("create/lists/", ListsListCreateView.as_view(), name="list-create-list"),
@@ -9,5 +13,5 @@ urlpatterns = [
         ListsRetrieveUpdateDestroyView.as_view(),
         name="retrieve-update-destroy-list",
     ),
-    path("list/by-time/", ListsListCreateView.as_view(), name="list-by-time"),
+    path("list/by-time/", ListByTimeView.as_view(), name="list-by-time"),
 ]
