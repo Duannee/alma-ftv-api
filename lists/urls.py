@@ -1,6 +1,7 @@
 from django.urls import path
 
 from .views import (
+    AvailableTimesForTheDayView,
     ListByTimeView,
     ListsListCreateView,
     ListsRetrieveUpdateDestroyView,
@@ -16,8 +17,13 @@ urlpatterns = [
     ),
     path("list/by-time/", ListByTimeView.as_view(), name="list-by-time"),
     path(
-        "students/available/",
+        "students/available-for-courts/",
         StudentsAvailableForCourtsView.as_view(),
         name="students-available",
+    ),
+    path(
+        "lists/available-times-today/",
+        AvailableTimesForTheDayView.as_view(),
+        name="lists-available-times-today",
     ),
 ]
