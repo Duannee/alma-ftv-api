@@ -1,9 +1,12 @@
+from django.utils.timezone import now
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import status
 from rest_framework.generics import (
     ListAPIView,
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
 )
+from rest_framework.response import Response
 
 from list_courts.models import ListCourt
 
@@ -58,3 +61,40 @@ class StudentsAvailableForCourtsView(ListAPIView):
         students_in_court = ListCourt.objects.values_list("list_id", flat=True)
 
         return students_in_list.exclude(id__in=students_in_court)
+
+
+class AvailableTimesForTheDayView(ListAPIView):
+    def get_queryset(self):
+        today = now().date()
+        return (
+            List.objects.filter(created_at__date=today)
+            .values_list("class_time", flat=True)
+            .distinct()
+        )
+
+    def list(self, request, *args, **kwargs):
+
+        return Response(
+            {"available_times": list(self.get_queryset())}, status=status.HTTP_200_OK
+        )
+
+
+class AvailableTimesForCategoryView(ListAPIView):
+    def list(self, request, *args, **kwargs):
+        user = request.user
+
+        if not user.is_authenticated:
+            return Response(
+                {"error": "User not authenticated"}, status=status.HTTP_401_UNAUTHORIZED
+            )
+
+        user_category = user.category
+
+        available_times = (
+            List.objects.filter(list_params__category=user_category)
+            .values_list("class_time", flat=True)
+            .distinct()
+        )
+        return Response(
+            {"available_times": list(available_times)}, status=status.HTTP_200_OK
+        )

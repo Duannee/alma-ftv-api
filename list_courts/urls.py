@@ -2,8 +2,10 @@ from django.urls import path
 
 from .views import (
     AllocateStudentsCourtsView,
+    ClearPreviousDayAllocationsView,
     ListCourtsListCreateView,
     ListCourtsRetrieveUpdateDestroyView,
+    MyCourtView,
 )
 
 urls_patterns = [
@@ -22,4 +24,8 @@ urls_patterns = [
         AllocateStudentsCourtsView.as_view(),
         name="allocate-student-court",
     ),
+    path(
+        "clear/courts/", ClearPreviousDayAllocationsView.as_view(), name="clear-courts"
+    ),
+    path("courts/my-court/", MyCourtView.as_view(), name="my-court"),
 ]
