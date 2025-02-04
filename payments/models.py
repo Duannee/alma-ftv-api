@@ -21,6 +21,5 @@ class Payment(models.Model):
     created_at = models.DateTimeField(default=now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
-
-def __str__(self) -> str:
-    return f"{self.student_id.name} - {self.pay_day}"
+    def __str__(self) -> str:
+        return f"{self.student.name} - {self.pay_day}"

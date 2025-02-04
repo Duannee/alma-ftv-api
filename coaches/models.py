@@ -12,7 +12,7 @@ class Coach(models.Model):
     email = models.EmailField(unique=True)
     phone = models.CharField(max_length=14)
     genre = models.CharField(max_length=7, choices=GENRE_CHOICE)
-    profile_img = models.TextField(null=True, blank=True)
+    profile_img = models.TextField(blank=True)
     created_at = models.DateTimeField(default=now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
