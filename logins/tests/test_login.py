@@ -42,3 +42,10 @@ class LoginAPITest(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(response.data["detail"], "Invalid credentials")
+
+    def test_login_missing_credentials(self):
+        """Test for failed login without credentials"""
+        response = self.client.post(self.login_url, {}, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.data["detail"], "Email and password are required")
