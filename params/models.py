@@ -17,3 +17,6 @@ class ListParams(models.Model):
     category = models.CharField(max_length=12, choices=CATEGORY_CHOICE)
     created_at = models.DateTimeField(default=now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.class_date} - {self.category} - {"Active" if self.status else "Inactive"}"
