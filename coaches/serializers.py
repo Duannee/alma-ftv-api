@@ -8,6 +8,8 @@ from .models import Coach
 class Base64ImageFieldValidator:
     @staticmethod
     def validate_base_64_image(value):
+        if not value:
+            return value
         try:
             base64.b64decode(value)
         except (ValueError, TypeError):
@@ -29,26 +31,26 @@ class CoachSerializer(serializers.ModelSerializer):
         fields = "__all__"
         read_only_fields = ["created_at", "updated_at"]
 
-    def validate(self, data):
-        for key in data.keys():
-            if key not in self.fields:
-                raise serializers.ValidationError(
-                    {key: "This field does not exist."}
-                )
-        return data
-
     def validate(self, attrs):
+        for key in self.initial_data.keys():
+            if key not in self.fields:
+                raise serializers.ValidationError({key: "This field does not exist."})
+
         name = attrs.get("name")
         email = attrs.get("email")
 
-        if Coach.objects.filter(name=name).exists():
+        if name and Coach.objects.filter(name=name).exists():
             raise serializers.ValidationError(
-                "There is already a coach with that name , please choose another one"
+                {
+                    "name": "There is already a coach with that name , please choose another one"
+                }
             )
 
-        if Coach.objects.filter(email=email).exists():
+        if email and Coach.objects.filter(email=email).exists():
             raise serializers.ValidationError(
-                "There is already a coach with that email, please choose another one"
+                {
+                    "email": "There is already a coach with that email, please choose another one"
+                }
             )
 
         return attrs
