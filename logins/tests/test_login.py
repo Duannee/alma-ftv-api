@@ -49,3 +49,19 @@ class LoginAPITest(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(response.data["detail"], "Email and password are required")
+
+    def test_token_refresh(self):
+        """Token refresh test"""
+        login_response = self.client.post(
+            self.login_url,
+            {"email": "testuser@example.com", "password": "password123"},
+            format="json",
+        )
+
+        refresh_token = login_response.data.get("refresh_token")
+
+        response = self.client.post(
+            self.refresh_url, {"refresh": refresh_token}, format="json"
+        )
+        self.assertEqual(login_response.status_code, status.HTTP_200_OK)
+        self.assertIn("access", response.data)
