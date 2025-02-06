@@ -20,6 +20,10 @@ class Student(models.Model):
         ("4X", "4X"),
         ("5X", "5X"),
     ]
+    PLAYING_SIDE_CHOICES = [
+        ("RIGHT", "RIGHT"),
+        ("LEFT", "LEFT"),
+    ]
 
     user = models.ForeignKey(
         "users.User", on_delete=models.CASCADE, related_name="students"
@@ -32,6 +36,7 @@ class Student(models.Model):
     frequency_of_classes = models.CharField(
         max_length=2, choices=FREQUENCY_OF_CLASSES_CHOICES
     )
+    playing_side = models.CharField(max_length=5, choices=PLAYING_SIDE_CHOICES)
     created_at = models.DateTimeField(default=now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 

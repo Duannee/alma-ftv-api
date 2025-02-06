@@ -50,6 +50,7 @@ class StudentSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "user",
+            "playing_side",
         ]
         read_only_fields = ["created_at", "updated_at"]
 
