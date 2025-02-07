@@ -10,11 +10,7 @@ from .models import Student
 class UserStudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = [
-            "first_name",
-            "last_name",
-            "email",
-        ]
+        fields = ["first_name", "last_name", "email", "is_superuser"]
 
 
 class Base64ImageFieldValidator:
