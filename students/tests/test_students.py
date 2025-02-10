@@ -78,3 +78,12 @@ class StudentAPITestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.student.refresh_from_db()
         self.assertEqual(self.student.phone, "1112223333")
+
+    def test_delete_student(self):
+        """Test deleting a student"""
+        url = reverse(
+            "retrieve-update-destroy-students", kwargs={"pk": self.student.id}
+        )
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(Student.objects.filter(id=self.student.id).exists())
