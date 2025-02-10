@@ -87,3 +87,9 @@ class StudentAPITestCase(TestCase):
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertFalse(Student.objects.filter(id=self.student.id).exists())
+
+    def test_get_me_student(self):
+        """Test retrieving the authenticated user's student profile"""
+        response = self.client.get(reverse("getme-students"))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
