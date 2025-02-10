@@ -66,3 +66,15 @@ class StudentAPITestCase(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["id"], self.student.id)
+
+    def test_update_student(self):
+        """Test updating a student's phone number"""
+        data = {"phone": 1112223333}
+        response = self.client.patch(
+            reverse("retrieve-update-destroy-students", args=[self.student.id]),
+            data,
+            format="json",
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.student.refresh_from_db()
+        self.assertEqual(self.student.phone, "1112223333")
