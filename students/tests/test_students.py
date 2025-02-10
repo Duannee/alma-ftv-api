@@ -57,3 +57,12 @@ class StudentAPITestCase(TestCase):
         response = self.client.get(reverse("create-students"))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
+
+    def test_get_student_detail(self):
+        """Test retrieving details of a specific student"""
+        url = reverse(
+            "retrieve-update-destroy-students", kwargs={"pk": self.student.id}
+        )
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["id"], self.student.id)
