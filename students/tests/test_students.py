@@ -100,3 +100,9 @@ class StudentAPITestCase(TestCase):
         response = self.client.get(reverse("getme-students"))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertGreaterEqual(len(response.data), 1)
+
+    def test_unauthorized_access(self):
+        """Test that unauthenticated users cannot access student list"""
+        self.client.logout()
+        response = self.client.get(reverse("create-students"))
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
