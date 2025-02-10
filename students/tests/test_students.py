@@ -93,3 +93,10 @@ class StudentAPITestCase(TestCase):
         response = self.client.get(reverse("getme-students"))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
+
+    def test_get_me_student_superuser(self):
+        """Test retrieving all students when authenticated as a superuser"""
+        self.client.force_authenticate(user=self.superuser)
+        response = self.client.get(reverse("getme-students"))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertGreaterEqual(len(response.data), 1)
