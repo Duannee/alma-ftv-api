@@ -35,3 +35,19 @@ class StudentAPITestCase(TestCase):
         )
 
         self.client.force_authenticate(user=self.user)
+
+    def test_create_student(self):
+        """Test creating a student"""
+        data = {
+            "birth_date": "1995-05-10",
+            "phone": "9876543210",
+            "genre": "FEMALE",
+            "category": "INTERMEDIARY",
+            "profile_img": base64.b64encode(b"sampleimage").decode("utf-8"),
+            "frequency_of_classes": "3X",
+            "playing_side": "RIGHT",
+        }
+        response = self.client.post(reverse("create-students"), data, format="json")
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data["user"]["email"], self.user.email)
