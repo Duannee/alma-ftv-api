@@ -51,3 +51,9 @@ class StudentAPITestCase(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data["user"]["email"], self.user.email)
+
+    def test_get_student_list(self):
+        """Test retrieving the list of students for authenticated user"""
+        response = self.client.get(reverse("create-students"))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 1)
