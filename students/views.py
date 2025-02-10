@@ -34,6 +34,6 @@ class GetMeStudentView(ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        if user.is_authenticated:
-            return Student.objects.filter(user=user)
-        return Student.objects.none()
+        if user.is_superuser:
+            return Student.objects.all()
+        return Student.objects.filter(user=user)
