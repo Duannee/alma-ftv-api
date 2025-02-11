@@ -1,15 +1,14 @@
 from rest_framework.generics import (
+    ListAPIView,
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
-    ListAPIView,
 )
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import Student
 from .serializers import StudentSerializer, UserStudentSerializer
-
-from rest_framework.response import Response
 
 
 class StudentListCreateView(ListCreateAPIView):

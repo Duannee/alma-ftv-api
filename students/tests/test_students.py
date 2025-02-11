@@ -1,10 +1,12 @@
-from users.models import User
+import base64
+
 from django.test import TestCase
 from django.urls import reverse
-from rest_framework.test import APIClient
 from rest_framework import status
+from rest_framework.test import APIClient
+
 from students.models import Student
-import base64
+from users.models import User
 
 
 class StudentAPITestCase(TestCase):
