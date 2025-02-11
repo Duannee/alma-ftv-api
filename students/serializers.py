@@ -10,7 +10,7 @@ from .models import Student
 class UserStudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "email", "is_superuser"]
+        fields = ["id", "first_name", "last_name", "email", "is_superuser"]
 
 
 class Base64ImageFieldValidator:
@@ -37,6 +37,7 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = [
+            "user",
             "id",
             "birth_date",
             "phone",
@@ -45,15 +46,23 @@ class StudentSerializer(serializers.ModelSerializer):
             "profile_img",
             "created_at",
             "updated_at",
-            "user",
             "playing_side",
         ]
         read_only_fields = ["created_at", "updated_at"]
 
     def validate(self, data):
+        request = self.context.get("request")
+        user = request.user
+
+        if Student.objects.filter(user=user).exists():
+            raise serializers.ValidationError(
+                {"error": "Student profile already exists"}
+            )
+
         for key in data.keys():
             if key not in self.fields:
                 raise serializers.ValidationError({key: "This field does not exist."})
+
         return data
 
     def create(self, validated_data):

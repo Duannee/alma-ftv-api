@@ -25,6 +25,12 @@ class ApproveAdmissionView(UpdateAPIView):
     def update(self, request, *args, **kwargs):
         user = self.get_object()
 
+        if not user.students.exists():
+            return Response(
+                {"message": "User has no student profile"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         user.is_student = True
         user.save()
         return Response({"message": "Approved user!"}, status=status.HTTP_200_OK)
