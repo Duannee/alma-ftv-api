@@ -102,7 +102,8 @@ class StudentAPITestCase(TestCase):
         self.client.force_authenticate(user=self.superuser)
         response = self.client.get(reverse("getme-students"))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertGreaterEqual(len(response.data), 1)
+        self.assertIn("email", response.data)
+        self.assertEqual(response.data["email"], self.superuser.email)
 
     def test_unauthorized_access(self):
         """Test that unauthenticated users cannot access student list"""
