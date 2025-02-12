@@ -8,9 +8,22 @@ from .models import Student
 
 
 class UserStudentSerializer(serializers.ModelSerializer):
+
+    isPendingStudent = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ["id", "first_name", "last_name", "email", "is_superuser"]
+        fields = [
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "is_superuser",
+            "isPendingStudent",
+        ]
+
+    def get_isPendingStudent(self, obj):
+        return Student.objects.filter(user=obj).exists() and not obj.is_student
 
 
 class Base64ImageFieldValidator:
@@ -54,7 +67,7 @@ class StudentSerializer(serializers.ModelSerializer):
         request = self.context.get("request")
         user = request.user
 
-        if Student.objects.filter(user=user).exists():
+        if self.instance is None and Student.objects.filter(user=user).exists():
             raise serializers.ValidationError(
                 {"error": "Student profile already exists"}
             )

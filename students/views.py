@@ -42,14 +42,25 @@ class GetMeStudentView(ListAPIView):
             if student:
                 return [student]
 
-        return []
+        return [user]
 
     def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
+        user = self.request.user
+        student = Student.objects.filter(user=user).first()
 
-        if self.request.user.is_superuser:
-            serializer = UserStudentSerializer(queryset, many=True)
-        else:
-            serializer = StudentSerializer(queryset, many=True)
+        if user.is_superuser:
+            serializer = UserStudentSerializer(user)
+            return Response(serializer.data, status=200)
 
+        if user.is_student and student:
+            serializer = StudentSerializer(student)
+            return Response(serializer.data, status=200)
+
+        if student and not user.is_student:
+            serializer = UserStudentSerializer(user)
+            data = serializer.data
+            data["isPendingStudent"] = True
+            return Response(data, status=200)
+
+        serializer = UserStudentSerializer(user)
         return Response(serializer.data, status=200)
