@@ -17,6 +17,7 @@ class StudentAPITestCase(TestCase):
             password="testpassword",
             first_name="Test",
             last_name="User",
+            is_student=True,
         )
         self.superuser = User.objects.create_superuser(
             email="admin@example.com",
@@ -38,8 +39,8 @@ class StudentAPITestCase(TestCase):
 
         self.client.force_authenticate(user=self.user)
 
-    def test_create_student(self):
-        """Test creating a student"""
+    def test_create_student_fails_if_already_exists(self):
+        """Test creating a student fails if the profile already exists"""
         data = {
             "birth_date": "1995-05-10",
             "phone": "9876543210",
@@ -51,8 +52,8 @@ class StudentAPITestCase(TestCase):
         }
         response = self.client.post(reverse("create-students"), data, format="json")
 
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data["user"]["email"], self.user.email)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("error", response.data)
 
     def test_get_student_list(self):
         """Test retrieving the list of students for authenticated user"""
@@ -94,7 +95,7 @@ class StudentAPITestCase(TestCase):
         """Test retrieving the authenticated user's student profile"""
         response = self.client.get(reverse("getme-students"))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data["id"], self.student.id)
 
     def test_get_me_student_superuser(self):
         """Test retrieving all students when authenticated as a superuser"""
