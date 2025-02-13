@@ -4,11 +4,15 @@ from .models import ListParams
 
 
 class ListParamSerializer(serializers.ModelSerializer):
+
+    class_time = serializers.TimeField(format="%H:%M")
+
     class Meta:
         model = ListParams
         fields = [
             "id",
             "class_date",
+            "class_time",
             "status",
             "expires_at",
             "description",
