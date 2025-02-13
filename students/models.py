@@ -24,10 +24,15 @@ class Student(models.Model):
         ("RIGHT", "RIGHT"),
         ("LEFT", "LEFT"),
     ]
+    UNIT_CHOICES = [
+        ("IPANEMA", "IPANEMA"),
+        ("BARRA", "BARRA"),
+    ]
 
     user = models.ForeignKey(
         "users.User", on_delete=models.CASCADE, related_name="students"
     )
+    unit = models.CharField(max_length=7, choices=UNIT_CHOICES)
     birth_date = models.DateField()
     phone = models.CharField(max_length=20)
     genre = models.CharField(max_length=7, choices=GENRE_CHOICE)

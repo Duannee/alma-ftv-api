@@ -17,7 +17,7 @@ class ListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = List
-        fields = ["id", "student", "student_name", "list_params", "class_time"]
+        fields = ["id", "student", "student_name", "list_params"]
         read_only_fields = ["created_at", "updated_at"]
 
     def validate(self, data):

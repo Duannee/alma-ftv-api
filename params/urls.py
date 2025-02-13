@@ -1,13 +1,14 @@
 from django.urls import path
 
-from .views import ParamsListCreateView, ParamsRetrieveUpdateDestroyView
+from .views import ParamsCreateView, ParamsRetrieveUpdateDestroyView, ParamsListView
 
 urlpatterns = [
     path(
         "create/params/",
-        ParamsListCreateView.as_view(),
-        name="list-create-params",
+        ParamsCreateView.as_view(),
+        name="create-params",
     ),
+    path("list/params/", ParamsListView.as_view(), name="list-params"),
     path(
         "update/params/<int:pk>/",
         ParamsRetrieveUpdateDestroyView.as_view(),
