@@ -19,19 +19,10 @@ class ParamsCreateView(CreateAPIView):
 
 
 class ParamsListView(ListAPIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
     queryset = ListParams.objects.all()
     serializer_class = ListParamSerializer
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     filterset_fields = ["unit", "category", "class_date"]
-
-    def get_queryset(self):
-        user = self.request.user
-
-        student_category = user.student.category
-
-        return ListParams.objects.filter(category=student_category)
 
 
 class ParamsRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
