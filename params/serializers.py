@@ -13,6 +13,7 @@ class ListParamSerializer(serializers.ModelSerializer):
             "expires_at",
             "description",
             "category",
+            "unit",
             "created_at",
             "updated_at",
         ]
