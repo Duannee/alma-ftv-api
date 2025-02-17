@@ -1,6 +1,11 @@
 from django.urls import path
 
-from .views import ParamsCreateView, ParamsRetrieveUpdateDestroyView, ParamsListView
+from .views import (
+    ParamsCreateView,
+    ParamsRetrieveUpdateDestroyView,
+    ParamsListView,
+    AvailableClassTimeParamsView,
+)
 
 urlpatterns = [
     path(
@@ -13,5 +18,10 @@ urlpatterns = [
         "update/params/<int:pk>/",
         ParamsRetrieveUpdateDestroyView.as_view(),
         name="retrieve-update-destroy-params",
+    ),
+    path(
+        "available-class-times/params",
+        AvailableClassTimeParamsView.as_view(),
+        name="available-class-times",
     ),
 ]
