@@ -29,6 +29,52 @@ class ListParams(models.Model):
         (time(8, 15), "08:15"),
     ]
 
+    CATEGORY_TIMES_BY_UNIT = {
+        "BEGINNER": {
+            "IPANEMA": {
+                0: [time(8, 0), time(18, 0)],
+                1: [time(6, 0), time(8, 0), time(18, 0)],
+                2: [time(8, 0), time(18, 0)],
+                3: [time(6, 0), time(8, 0), time(18, 0)],
+                4: [time(8, 0)],
+            },
+            "BARRA": {
+                0: [time(7, 15), time(8, 15)],
+                1: [time(7, 15), time(8, 15)],
+                2: [time(7, 15), time(8, 15)],
+                3: [time(7, 15), time(8, 15)],
+                4: [time(7, 15), time(8, 15)],
+            },
+        },
+        "INTERMEDIARY": {
+            "IPANEMA": {
+                0: [time(6, 0), time(17, 0)],
+                1: [time(7, 0), time(17, 0)],
+                2: [time(6, 0), time(17, 0)],
+                3: [time(7, 0), time(17, 0)],
+                4: [time(6, 0)],
+            },
+            "BARRA": {
+                0: [time(6, 15)],
+                2: [time(6, 15)],
+                4: [time(6, 15)],
+            },
+        },
+        "ADVANCED": {
+            "IPANEMA": {
+                0: [time(7, 0)],
+                1: [time(9, 0)],
+                2: [time(7, 0)],
+                3: [time(9, 0)],
+                4: [time(7, 0)],
+            },
+            "BARRA": {
+                1: [time(6, 15)],
+                3: [time(6, 15)],
+            },
+        },
+    }
+
     class_date = models.DateField()
     class_time = models.TimeField(choices=CLASS_TIME_CHOICES)
     status = models.BooleanField(default=True)
@@ -39,5 +85,29 @@ class ListParams(models.Model):
     created_at = models.DateTimeField(default=now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def clean(self):
+        if self.class_time:
+            if self.category in self.CATEGORY_TIMES_BY_UNIT:
+                if self.unit in self.CATEGORY_TIMES_BY_UNIT[self.category]:
+                    weekday = self.class_date.weekday()
+                    valid_times = self.CATEGORY_TIMES_BY_UNIT[self.category][
+                        self.unit
+                    ].get(weekday, [])
+
+                if self.class_time not in valid_times:
+                    raise ValueError(
+                        f"The class time {self.class_time.strftime("%H:%M")} is not allowed for  category {self.category} at {self.unit} on {self.class_date.strftime("%Y-%m-%d")}"
+                    )
+                else:
+                    raise ValueError(
+                        f"Invalid unit {self.unit} for category {self.category}"
+                    )
+            else:
+                raise ValueError(f"Invalid category {self.category}")
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return f"{self.class_date} - {self.category} - {"Active" if self.status else "Inactive"}"
+        return f"{self.class_date} - {self.category} - {self.unit} - {self.class_time.strftime("%H:%M")} - {"Active' if self.status else 'Inactive"}"
