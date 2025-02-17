@@ -5,7 +5,7 @@ from .models import ListParams
 
 class ListParamSerializer(serializers.ModelSerializer):
 
-    class_time = serializers.TimeField(format="%H:%M")
+    class_time = serializers.TimeField(format="%H:%M", required=False, allow_null=True)
 
     class Meta:
         model = ListParams
@@ -21,4 +21,4 @@ class ListParamSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
         ]
-        read_only_fields = ["created_at", "updated_at"]
+        read_only_fields = ["created_at", "updated_at", "expires_at"]
