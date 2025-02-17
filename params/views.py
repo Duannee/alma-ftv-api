@@ -3,6 +3,7 @@ from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
     CreateAPIView,
     ListAPIView,
+    UpdateAPIView,
 )
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
@@ -59,3 +60,16 @@ class AvailableClassTimeParamsView(ListAPIView):
         formatted_times = [time.strftime("%H:%M") for time in queryset]
 
         return Response({"available_times": formatted_times})
+
+
+class SelectClassTimeParamsView(UpdateAPIView):
+    queryset = ListParams.objects.all()
+    serializer_class = ListParamSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.class_time = request.data.get("class_time")
+        instance.save()
+        return Response({"message": "Class time updated successfully"})
