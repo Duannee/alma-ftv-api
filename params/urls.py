@@ -4,7 +4,6 @@ from .views import (
     ParamsCreateView,
     ParamsRetrieveUpdateDestroyView,
     ParamsListView,
-    AvailableClassTimeParamsView,
 )
 
 urlpatterns = [
@@ -18,10 +17,5 @@ urlpatterns = [
         "update/params/<int:pk>/",
         ParamsRetrieveUpdateDestroyView.as_view(),
         name="retrieve-update-destroy-params",
-    ),
-    path(
-        "available-class-times/params",
-        AvailableClassTimeParamsView.as_view(),
-        name="available-class-times",
     ),
 ]
