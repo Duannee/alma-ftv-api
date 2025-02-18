@@ -18,6 +18,19 @@ class ListsListCreateView(ListCreateAPIView):
     queryset = List.objects.all()
     serializer_class = ListSerializer
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        try:
+            self.perform_create(serializer)
+        except Exception as e:
+            return Response(
+                {"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 class ListsRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = List.objects.all()
