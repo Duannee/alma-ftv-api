@@ -10,37 +10,46 @@ from .utils import can_add_to_list
 
 class ListSerializer(serializers.ModelSerializer):
     student = serializers.PrimaryKeyRelatedField(queryset=Student.objects.all())
-    student_name = serializers.CharField(source="student.name", read_only=True)
+    student_name = serializers.CharField(source="user.name", read_only=True)
     category_name = serializers.CharField(
         source="list_params.category.name", read_only=True
     )
+    class_time = serializers.TimeField(format="%H:%M")
 
     class Meta:
         model = List
-        fields = ["id", "student", "student_name", "list_params"]
+        fields = [
+            "id",
+            "student",
+            "class_time",
+            "student_name",
+            "list_params",
+            "category_name",
+        ]
         read_only_fields = ["created_at", "updated_at"]
 
     def validate(self, data):
-        student = data["student"]
-        list_params = data["list_params"]
+        try:
+            student = data["student"]
+            list_params = data["list_params"]
 
-        if student.category != list_params.category:
-            raise ValidationError(
-                "You can only subscribe to lists in your own category."
+            if student.category != list_params.category:
+                raise ValidationError(
+                    "You can only subscribe to lists in your own category."
+                )
+
+            now = localtime()
+            created_at = (
+                self.instance.created_at if self.instance and self.instance.pk else now
             )
+            deadline = created_at.replace(hour=21, minute=0, second=0, microsecond=0)
 
-        if not can_add_to_list(student):
-            raise ValidationError(
-                "You have already reached the frequency limit this week."
-            )
+            if now > deadline:
+                raise ValidationError(
+                    "You cannot add to the list after 21:00 of the same day."
+                )
 
-        now = localtime()
-        created_at = self.instance.created_at if self.instance else now
-        deadline = created_at.replace(hour=21, minute=0, second=0, microsecond=0)
-
-        if now > deadline:
-            raise ValidationError(
-                "You cannot add to the list after 21:00 of the same day."
-            )
+        except Exception as e:
+            raise serializers.ValidationError({"error": str(e)})
 
         return data
