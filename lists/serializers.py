@@ -36,6 +36,11 @@ class ListSerializer(serializers.ModelSerializer):
             student = data["student"]
             list_params = data["list_params"]
 
+            if List.objects.filter(student=student, list_params=list_params).exists():
+                raise ValidationError(
+                    "This student is already subscribed to this list."
+                )
+
             if student.category != list_params.category:
                 raise ValidationError(
                     "You can only subscribe to lists in your own category."
