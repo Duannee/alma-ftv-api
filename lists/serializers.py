@@ -10,7 +10,7 @@ from .utils import can_add_to_list
 
 class ListSerializer(serializers.ModelSerializer):
     student = serializers.PrimaryKeyRelatedField(queryset=Student.objects.all())
-    student_name = serializers.CharField(source="user.name", read_only=True)
+    student_name = serializers.SerializerMethodField()
     category_name = serializers.CharField(
         source="list_params.category.name", read_only=True
     )
@@ -27,6 +27,9 @@ class ListSerializer(serializers.ModelSerializer):
             "category_name",
         ]
         read_only_fields = ["created_at", "updated_at"]
+
+    def get_student_name(self, obj):
+        return f"{obj.student.user.first_name} {obj.student.user.last_name}".strip()
 
     def validate(self, data):
         try:
