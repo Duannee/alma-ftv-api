@@ -1,15 +1,13 @@
-from datetime import timedelta
-from rest_framework.generics import (
-    RetrieveUpdateDestroyAPIView,
-    CreateAPIView,
-    ListAPIView,
-    UpdateAPIView,
-)
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
+from rest_framework.generics import (
+    CreateAPIView,
+    ListAPIView,
+    RetrieveUpdateDestroyAPIView,
+)
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from users.permissions import isSuperUser
 
+from users.permissions import isSuperUser
 
 from .models import ListParams
 from .serializers import ListParamSerializer

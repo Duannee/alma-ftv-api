@@ -5,7 +5,6 @@ from rest_framework.exceptions import ValidationError
 from students.models import Student
 
 from .models import List
-from .utils import can_add_to_list
 
 
 class ListSerializer(serializers.ModelSerializer):

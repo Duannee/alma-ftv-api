@@ -1,7 +1,8 @@
+from datetime import time
+
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.timezone import localtime, now
-from datetime import time
 
 
 class List(models.Model):
