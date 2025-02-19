@@ -13,9 +13,14 @@ from list_courts.models import ListCourt
 
 from .models import List
 from .serializers import ListSerializer
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 
 class ListsCreateView(CreateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
     queryset = List.objects.all()
     serializer_class = ListSerializer
 
