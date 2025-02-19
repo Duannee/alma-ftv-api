@@ -1,7 +1,8 @@
+from datetime import time
+
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.timezone import localtime, now
-from datetime import time
 
 
 class List(models.Model):
@@ -26,6 +27,9 @@ class List(models.Model):
     class_time = models.TimeField(choices=CLASS_TIME_CHOICES)
     created_at = models.DateTimeField(default=now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ("student", "list_params")
 
     def clean(self):
         now = localtime()

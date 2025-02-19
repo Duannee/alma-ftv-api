@@ -3,13 +3,13 @@ from django.urls import path
 from .views import (
     AvailableTimesForTheDayView,
     ListByTimeView,
-    ListsListCreateView,
+    ListsCreateView,
     ListsRetrieveUpdateDestroyView,
     StudentsAvailableForCourtsView,
 )
 
 urlpatterns = [
-    path("create/lists/", ListsListCreateView.as_view(), name="list-create-list"),
+    path("create/lists/", ListsCreateView.as_view(), name="list-create-list"),
     path(
         "update/lists/<int:pk>/",
         ListsRetrieveUpdateDestroyView.as_view(),

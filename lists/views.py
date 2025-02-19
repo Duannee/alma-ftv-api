@@ -2,11 +2,14 @@ from django.utils.timezone import now
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status
 from rest_framework.generics import (
+    CreateAPIView,
     ListAPIView,
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
 )
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from list_courts.models import ListCourt
 
@@ -14,7 +17,10 @@ from .models import List
 from .serializers import ListSerializer
 
 
-class ListsListCreateView(ListCreateAPIView):
+class ListsCreateView(CreateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
     queryset = List.objects.all()
     serializer_class = ListSerializer
 
