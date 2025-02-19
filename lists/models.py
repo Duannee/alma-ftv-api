@@ -27,6 +27,9 @@ class List(models.Model):
     created_at = models.DateTimeField(default=now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        unique_together = ("student", "list_params")
+
     def clean(self):
         now = localtime()
         created_at = self.created_at if self.pk else now
