@@ -5,6 +5,7 @@ from rest_framework.generics import (
     ListAPIView,
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
+    CreateAPIView,
 )
 from rest_framework.response import Response
 
@@ -14,7 +15,7 @@ from .models import List
 from .serializers import ListSerializer
 
 
-class ListsListCreateView(ListCreateAPIView):
+class ListsCreateView(CreateAPIView):
     queryset = List.objects.all()
     serializer_class = ListSerializer
 
