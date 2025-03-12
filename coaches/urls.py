@@ -6,7 +6,12 @@ urlpatterns = [
     path(
         "create/coaches/",
         CoachListCreateView.as_view(),
-        name="list-create-coaches",
+        name="create-coaches",
+    ),
+    path(
+        "list/coaches/",
+        CoachListCreateView.as_view(),
+        name="list-coaches",
     ),
     path(
         "update/coaches/<int:pk>/",
