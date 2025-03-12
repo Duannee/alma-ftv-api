@@ -56,6 +56,7 @@ class StudentSerializer(serializers.ModelSerializer):
             "phone",
             "genre",
             "category",
+            "unit",
             "profile_img",
             "created_at",
             "updated_at",
