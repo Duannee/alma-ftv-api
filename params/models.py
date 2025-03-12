@@ -22,6 +22,7 @@ class ListParams(models.Model):
     description = models.TextField()
     category = models.CharField(max_length=12, choices=CATEGORY_CHOICE)
     unit = models.CharField(max_length=7, choices=UNIT_CHOICES)
+    created_by = models.CharField(max_length=10)
     created_at = models.DateTimeField(default=now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
