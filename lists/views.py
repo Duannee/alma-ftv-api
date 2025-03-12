@@ -15,6 +15,9 @@ from list_courts.models import ListCourt
 
 from .models import List
 from .serializers import ListSerializer
+from .category_unit_time import CATEGORY_TIMES_BY_UNIT
+from datetime import datetime
+from students.models import Student
 
 
 class ListsCreateView(CreateAPIView):
@@ -83,19 +86,32 @@ class StudentsAvailableForCourtsView(ListAPIView):
 
 
 class AvailableTimesForTheDayView(ListAPIView):
-    def get_queryset(self):
-        today = now().date()
-        return (
-            List.objects.filter(created_at__date=today)
-            .values_list("class_time", flat=True)
-            .distinct()
-        )
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
+        user = request.user
+        try:
+            student = Student.objects.get(user=user)
+        except Student.DoesNotExist:
+            return Response(
+                {"error": "Student profile not found"}, status=status.HTTP_404_NOT_FOUND
+            )
 
-        return Response(
-            {"available_times": list(self.get_queryset())}, status=status.HTTP_200_OK
+        today_weekday = datetime.now().weekday()
+
+        student_category = student.category
+        student_unit = student.unit
+
+        available_times = (
+            CATEGORY_TIMES_BY_UNIT.get(student_category, {})
+            .get(student_unit, {})
+            .get(today_weekday, [])
         )
+
+        formatted_times = [t.strftime("%H:%M") for t in available_times]
+
+        return Response({"available_times": formatted_times}, status=status.HTTP_200_OK)
 
 
 class AvailableTimesForCategoryView(ListAPIView):
