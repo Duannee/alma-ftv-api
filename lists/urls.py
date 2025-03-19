@@ -5,7 +5,7 @@ from .views import (
     ListByTimeView,
     ListsCreateView,
     ListsRetrieveUpdateDestroyView,
-    StudentsAvailableForCourtsView,
+    StudentsAvailableForAllocationView,
 )
 
 urlpatterns = [
@@ -17,9 +17,9 @@ urlpatterns = [
     ),
     path("list/by-time/", ListByTimeView.as_view(), name="list-by-time"),
     path(
-        "students/available-for-courts/",
-        StudentsAvailableForCourtsView.as_view(),
-        name="students-available",
+        "students/available-for-allocation/",
+        StudentsAvailableForAllocationView.as_view(),
+        name="students-available-for-allocation",
     ),
     path(
         "lists/available-times-today/",
