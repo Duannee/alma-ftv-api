@@ -6,6 +6,8 @@ from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
 )
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.permissions import IsAuthenticated
+from users.permissions import isStudent
 
 from users.permissions import isSuperUser
 
@@ -21,6 +23,8 @@ class ParamsCreateView(CreateAPIView):
 
 
 class ParamsListView(ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated, isStudent]
     queryset = ListParams.objects.all()
     serializer_class = ListParamSerializer
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
