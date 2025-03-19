@@ -14,6 +14,7 @@ class ListSerializer(serializers.ModelSerializer):
         source="list_params.category.name", read_only=True
     )
     class_time = serializers.TimeField(format="%H:%M")
+    side = serializers.CharField(source="student.side", read_only=True)
 
     class Meta:
         model = List
@@ -22,6 +23,7 @@ class ListSerializer(serializers.ModelSerializer):
             "student",
             "class_time",
             "student_name",
+            "side",
             "list_params",
             "category_name",
         ]

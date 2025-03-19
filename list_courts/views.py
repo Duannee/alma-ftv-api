@@ -11,6 +11,9 @@ from rest_framework.response import Response
 
 from courts.models import Court
 from lists.models import List
+from users.permissions import isSuperUser
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
 
 from .models import ListCourt
 from .serializers import ListCourtSerializer
@@ -27,54 +30,57 @@ class ListCourtsRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
 
 
 class AllocateStudentsCourtsView(CreateAPIView):
-    queryset = ListCourt.objects.all()
-    serializer_class = ListCourtSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [isSuperUser]
 
-    def create(self, request, *args, **kwargs):
-        court_id = request.data.get("court_id")
-        student_list_ids = request.data.get("student_list_ids")
-        class_time = request.data.get("class_time")
+    def post(self, request, *args, **kwargs):
+        student_list_ids = request.data.get("student_list_ids", [])
+        court_number = request.data.get("court_number")
 
-        if not court_id or not student_list_ids or not class_time:
+        if not student_list_ids or not court_number:
             return Response(
-                {"error": "Court, Students and Class Time are required"},
+                {"error": "Student list IDs and court number are required"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
         try:
-            court = Court.objects.get(id=court_id)
+            court = Court.objects.get(number=court_number, status="ACTIVE")
         except Court.DoesNotExist:
             return Response(
-                {"error": "Court not found"}, status=status.HTTP_404_NOT_FOUND
+                {"error": f"Court {court_number} not found or inactive"},
+                status=status.HTTP_404_NOT_FOUND,
             )
 
+        allocated_students = []
+        errors = []
         for student_list_id in student_list_ids:
             try:
-                list_instance = List.objects.get(
-                    id=student_list_id, class_time=class_time
-                )
+                list_instance = List.objects.get(id=student_list_id)
 
-                existing_allocation = (
-                    ListCourt.objects.filter(list=list_instance)
-                    .select_related("court")
-                    .first()
-                )
+                if ListCourt.objects.filter(list=list_instance).exists():
+                    errors.append(
+                        f"Student {list_instance.student.name} is already allocated to a court"
+                    )
 
-                if existing_allocation:
-                    existing_allocation.court = court
-                    existing_allocation.save()
-                else:
-                    ListCourt.objects.create(list=list_instance, court=court)
+                    continue
 
+                ListCourt.objects.create(court=court, list=list_instance)
+                allocated_students.append(list_instance.student.name)
             except List.DoesNotExist:
-                return Response(
-                    {"error": f"List entry with ID {student_list_id} not found"},
-                    status=status.HTTP_404_NOT_FOUND,
-                )
-
+                errors.append(f"List entry with ID {student_list_id} not found")
+        if errors:
+            return Response(
+                {
+                    "message": f"Students {allocated_students} successfully allocated to Court {court.number}",
+                    "errors": errors,
+                },
+                status=status.HTTP_207_MULTI_STATUS,
+            )
         return Response(
-            {"message": "Students successfully allocated to the courts"},
-            status=status.HTTP_201_CREATED,
+            {
+                "message": f"Students {allocated_students} successfully allocated to Court {court.number}"
+            },
+            status=status.HTTP_200_OK,
         )
 
 

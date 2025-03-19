@@ -12,6 +12,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from list_courts.models import ListCourt
+from users.permissions import isSuperUser
 
 from .models import List
 from .serializers import ListSerializer
@@ -62,27 +63,36 @@ class ListByTimeView(ListCreateAPIView):
         return queryset
 
 
-class StudentsAvailableForCourtsView(ListAPIView):
-    serializer_class = ListSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ["class_time"]
+class StudentsAvailableForAllocationView(ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [isSuperUser]
 
     def get_queryset(self):
+        category = self.request.query_params.get("category")
+        unit = self.request.query_params.get("unit")
         class_time = self.request.query_params.get("class_time")
 
-        user = self.request.user
-        if not user.is_authenticated:
+        if not category or not unit or not class_time:
             return List.objects.none()
 
-        student_category = user.category
-
-        students_in_list = List.objects.filter(
-            class_time=class_time, student__category=student_category
+        return List.objects.filter(
+            list_params__category=category,
+            list_params__unit=unit,
+            class_time=class_time,
         )
 
-        students_in_court = ListCourt.objects.values_list("list_id", flat=True)
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
 
-        return students_in_list.exclude(id__in=students_in_court)
+        if not queryset.exists():
+            return Response(
+                {
+                    "error": "No students found for the given category, unit, and class time"
+                },
+                status=status.HTTP_404_NOT_FOUND,
+            )
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class AvailableTimesForTheDayView(ListAPIView):

@@ -20,7 +20,7 @@ urls_patterns = [
         name="retrieve-update-destroy-list-courts",
     ),
     path(
-        "allocate/courts/",
+        "allocate/students-to-courts/",
         AllocateStudentsCourtsView.as_view(),
         name="allocate-student-court",
     ),
